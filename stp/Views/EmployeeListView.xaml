@@ -1,0 +1,72 @@
+﻿<UserControl x:Class="stp.Views.EmployeeListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:common="clr-namespace:stp.Common"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity">
+
+    <Grid x:Name="LayoutRoot" Margin="4">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Border BorderThickness="1" BorderBrush="Black" Margin="0,0,0,4" Padding="4" Background="#FFDFE9F5" CornerRadius="2">
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Filtereingabe:" VerticalAlignment="Center" Grid.Column="0" Margin="4,0" HorizontalAlignment="Right"/>
+                
+                <TextBox MinWidth="100" VerticalContentAlignment="Center" Margin="4,0" 
+                         Text="{Binding FilterValue, UpdateSourceTrigger=PropertyChanged, FallbackValue='*'}" 
+                         Grid.Column="1" 
+                         TextAlignment="Center">     
+                    
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="LostFocus">
+                                <i:InvokeCommandAction Command="{Binding UpdateFilterValue}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers> 
+                    
+                </TextBox>
+                
+                <ComboBox Margin="4,0" Grid.Column="2" MinWidth="120" SelectedItem="{Binding SelectedComboBoxItem}">
+                    <common:CustomComboBoxItem Text="Vorname" Value="firstName" />
+                    <common:CustomComboBoxItem Text="Nachname" Value="E.name" />
+                    <common:CustomComboBoxItem Text="Stadt" Value="city" />
+                    <common:CustomComboBoxItem Text="Geburtsdatum" Value="birth" />
+                    <common:CustomComboBoxItem Text="Email" Value="email" />
+                    <common:CustomComboBoxItem Text="Eintrittsdatum" Value="date_of_joining" />
+                    <common:CustomComboBoxItem Text="Abteilung" Value="D.name" />
+                </ComboBox>
+
+                <Button Content="Suchen" Width="50" Command="{Binding SearchEmployees}" Grid.Column="3"/>
+                
+            </Grid>
+
+        </Border>
+
+        <Border Margin="0,0,0,4" Grid.Row="1">
+            <DataGrid ItemsSource="{Binding ItemSource}" SelectedItem="{Binding SelectedItem}" AutoGenerateColumns="False" IsReadOnly="True">
+                                
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Vorname" Binding="{Binding FirstName}" />
+                    <DataGridTextColumn Header="Nachname" Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="Stadt" Binding="{Binding City}" />
+                    <DataGridTextColumn Header="Geburtsdatum" Binding="{Binding Birth}" />
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" />
+                    <DataGridTextColumn Header="Eintrittsdatum" Binding="{Binding DateOfJoining}" />
+                    <DataGridTextColumn Header="Abteilung" Binding="{Binding Department}" />
+                </DataGrid.Columns>
+                
+            </DataGrid>
+        </Border>
+        
+    </Grid>
+</UserControl>

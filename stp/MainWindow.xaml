@@ -1,0 +1,68 @@
+﻿<RibbonWindow x:Class="stp.MainWindow"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"        
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:vm="clr-namespace:stp.ViewModels"
+              Title="STP" MinHeight="600" MinWidth="800" Height="600" Width="800">
+
+    <RibbonWindow.Resources>
+        <vm:MainViewModel x:Key="MainViewModel" />
+    </RibbonWindow.Resources>
+    
+    <Grid x:Name="LayoutRoot" VerticalAlignment="Top" DataContext="{StaticResource MainViewModel}">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Ribbon Part -->
+        <Ribbon x:Name="RibbonControl">
+            <!-- Ribbon Application Menu -->
+            <Ribbon.ApplicationMenu>
+                <RibbonApplicationMenu KeyTip="M" IsMainMenu="True">
+                    <RibbonApplicationMenuItem Header="Beenden" ImageSource="Images\CloseDocument.png" Command="{Binding CloseApplication}"/>
+                </RibbonApplicationMenu>
+            </Ribbon.ApplicationMenu>
+            <!-- Ribbon HelpPaneContent -->
+            <Ribbon.HelpPaneContent>
+                <RibbonButton SmallImageSource="Images\Help.png" />
+            </Ribbon.HelpPaneContent>
+            <!-- Ribbon Quick Access Toolbar -->
+            <Ribbon.QuickAccessToolBar>
+                <RibbonQuickAccessToolBar>
+                    <RibbonButton SmallImageSource="Images\CloseDocument.png" Command="{Binding CloseApplication}"/>
+                </RibbonQuickAccessToolBar>
+            </Ribbon.QuickAccessToolBar>            
+            <!-- Ribbon Tab #1: Mitarbeiter -->
+            <RibbonTab Header="Mitarbeiter" IsSelected="{Binding IsTabEmployeeSelected}">
+                <!-- "Neu" group-->
+                <RibbonGroup Header="Neu">
+                    <RibbonButton LargeImageSource="Images\Add.png" Label="Neu" />
+                </RibbonGroup>
+                <!-- "Verwalten" group-->
+                <RibbonGroup Header="Verwalten">
+                    <RibbonButton SmallImageSource="Images\Edit.png" Label="Bearbeiten" Command="{Binding EditEmployeeCommand}"/>
+                    <RibbonButton SmallImageSource="Images\View.png" Label="Ansicht" Command="{Binding ShowEmployeeCommand}"/>
+                    <RibbonButton SmallImageSource="Images\Delete.png" Label="Archivieren" Command="{Binding ArchiveEmployeeCommand}" />
+                </RibbonGroup>
+            </RibbonTab>
+            <!-- Ribbon Tab #2: Schulungen -->
+            <RibbonTab Header="Schulungen" IsSelected="{Binding IsTabCourseSelected}">
+                <!-- "Neu" group-->
+                <RibbonGroup Header="Neu">
+                    <RibbonButton LargeImageSource="Images\Add.png" Label="Neu" />
+                </RibbonGroup>
+                <!-- "Verwalten" group-->
+                <RibbonGroup Header="Verwalten">
+                    <RibbonButton SmallImageSource="Images\Edit.png" Label="Bearbeiten" />
+                    <RibbonButton SmallImageSource="Images\Save.png" Label="Ansicht" />
+                    <RibbonButton SmallImageSource="Images\Delete.png" Label="Löschen" />
+                </RibbonGroup>
+            </RibbonTab>
+        </Ribbon>
+        <!-- Content Part -->
+        <ContentControl Grid.Row="1" Content="{Binding ActiveUserControl}" />
+        
+    </Grid>
+    
+</RibbonWindow>
