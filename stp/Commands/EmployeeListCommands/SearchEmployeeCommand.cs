@@ -1,9 +1,6 @@
 ﻿using stp.Data;
-using stp.Models;
 using stp.ViewModels;
 using System;
-using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,11 +8,11 @@ namespace stp.Commands.EmployeeListCommands
 {
     internal class SearchEmployeeCommand : ICommand
     {
-        private EmployeeListViewModel vm;
+        private EmployeeListViewModel employeeListViewModel;
 
         public SearchEmployeeCommand(EmployeeListViewModel vm)
         {
-            this.vm = vm;
+            this.employeeListViewModel = vm;
         }
 
         public event EventHandler CanExecuteChanged
@@ -26,31 +23,28 @@ namespace stp.Commands.EmployeeListCommands
 
         public bool CanExecute(object parameter)
         {
-            if ((vm.SelectedComboBoxItem == null) || String.IsNullOrWhiteSpace(vm.FilterValue))
+            if ((employeeListViewModel.SelectedComboBoxItem == null) 
+                || String.IsNullOrWhiteSpace(employeeListViewModel.FilterValue))
                 return false;
-
             return true;
         }
 
         public void Execute(object parameter)
         {
-            if (vm.FilterValue == "*")
+            if (employeeListViewModel.FilterValue == "*")
             {
-                vm.ItemSource = DataManager.Instance.SelectFromEmployees();
+                employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees();
 
-                if (vm.ItemSource.Count == 0)
-                {
+                if (employeeListViewModel.ItemSource.Count == 0)
                     MessageBox.Show("Kein Treffer!");
-                }
             }
             else
             {
-                vm.ItemSource = DataManager.Instance.SelectFromEmployees(vm.SelectedComboBoxItem.Value, vm.FilterValue);
+                employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees(
+                    employeeListViewModel.SelectedComboBoxItem.Value, employeeListViewModel.FilterValue);
 
-                if (vm.ItemSource.Count == 0)
-                {
+                if (employeeListViewModel.ItemSource.Count == 0)
                     MessageBox.Show("Kein Treffer!");
-                }
             }           
         }
     }

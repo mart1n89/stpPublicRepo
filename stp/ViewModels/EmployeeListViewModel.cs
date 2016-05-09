@@ -20,12 +20,15 @@ namespace stp.ViewModels
         /// <summary>
         /// Initializes a new instance of the EmployeeViewModel class.
         /// </summary>
-        public EmployeeListViewModel()
+        public EmployeeListViewModel() { OnInitialize(); }
+
+        private void OnInitialize()
         {
             employeeItemSource = DataManager.Instance.SelectFromEmployees();
 
             SearchEmployees = new SearchEmployeeCommand(this);
             UpdateFilterValue = new UpdateFilterValueCommand(this);
+            ShowArchivedEmployees = new ShowArchivedEmployeesCommand(this);
 
             FilterValue = "*";
         }
@@ -50,6 +53,26 @@ namespace stp.ViewModels
             }
         }
 
+        public CustomComboBoxItem SelectedComboBoxItem
+        {
+            get { return selectedComboBoxItem; }
+            set
+            {
+                selectedComboBoxItem = value;
+                OnPropertyChanged("SelectedComboBoxItem");
+            }
+        }
+
+        public String FilterValue
+        {
+            get { return filterValue; }
+            set
+            {
+                filterValue = value;
+                OnPropertyChanged("FilterValue");
+            }
+        }   
+
         public ICommand SearchEmployees
         {
             get;
@@ -62,25 +85,11 @@ namespace stp.ViewModels
             private set;
         }
 
-        public String FilterValue
+        public ICommand ShowArchivedEmployees
         {
-            get { return filterValue; }
-            set
-            {
-                filterValue = value;
-                OnPropertyChanged("FilterValue");
-            }
-        }
 
-        public CustomComboBoxItem SelectedComboBoxItem
-        {
-            get { return selectedComboBoxItem; }
-            set
-            {
-                selectedComboBoxItem = value;
-                OnPropertyChanged("SelectedComboBoxItem");
-            }
+            get;
+            private set;
         }
-
     }
 }

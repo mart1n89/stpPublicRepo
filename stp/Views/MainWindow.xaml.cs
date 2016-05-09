@@ -1,7 +1,6 @@
-﻿using stp.Data;
-using System.Windows.Controls.Ribbon;
+﻿using System.Windows.Controls.Ribbon;
 
-namespace stp
+namespace stp.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

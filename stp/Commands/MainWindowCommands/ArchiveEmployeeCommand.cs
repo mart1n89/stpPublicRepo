@@ -1,23 +1,21 @@
-﻿using stp.ViewModels;
+﻿using stp.Common;
+using stp.Data;
+using stp.ViewModels;
 using stp.Views;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace stp.Commands.MainWindowCommands
 {
     internal class ArchiveEmployeeCommand : ICommand
     {
-        EmployeeListViewModel lvm;
-        EmployeeCardViewModel cvm;
+        EmployeeListViewModel employeeListViewModel;
+        EmployeeCardViewModel employeeCardViewModel;
 
         public ArchiveEmployeeCommand(EmployeeListViewModel lvm, EmployeeCardViewModel cvm)
         {
-            this.lvm = lvm;
-            this.cvm = cvm;
+            this.employeeListViewModel = lvm;
+            this.employeeCardViewModel = cvm;
         }
 
         public event EventHandler CanExecuteChanged
@@ -28,19 +26,13 @@ namespace stp.Commands.MainWindowCommands
 
         public bool CanExecute(object parameter)
         {
-            if (lvm.SelectedItem != null)
-                return true;
-            return false;
+            return (employeeListViewModel.SelectedItem != null) ? true : false;
         }
 
         public void Execute(object parameter)
         {
-            cvm.Employee = lvm.SelectedItem;
-
-            EmployeeCardView empView = new EmployeeCardView();
-
-            empView.DataContext = cvm;
-            empView.ShowDialog();
+            DataManager.Instance.ArchiveFromEmployee(employeeListViewModel.SelectedItem.Id);
+            employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees();
         }
     }
 }

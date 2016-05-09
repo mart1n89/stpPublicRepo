@@ -16,9 +16,7 @@ namespace stp.Commands.MainWindowCommands
 
         public bool CanExecute(object parameter)
         {
-            if (Application.Current == null)
-                return false;
-            return true;
+            return (Application.Current != null) ? true : false;
         }
 
         public void Execute(object parameter)

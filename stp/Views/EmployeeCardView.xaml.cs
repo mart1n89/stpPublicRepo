@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls.Ribbon;
+﻿using System.Windows.Controls.Ribbon;
 
 namespace stp.Views
 {

@@ -123,83 +123,83 @@ namespace stp.Models
             if (record == null)
                 throw new ArgumentNullException("record", "Could not be null.");
 
-            Employee currentEmployee = new Employee();
+            Employee anEmployee = new Employee();
 
-            currentEmployee.Id = (int)record["ID"];
+            anEmployee.Id = (int)record["ID"];
 
             if (!record.IsNull("firstName"))
             {
-                currentEmployee.FirstName = record["firstName"].ToString();
+                anEmployee.FirstName = record["firstName"].ToString();
             }
             else
             {
-                currentEmployee.FirstName = String.Empty;
+                anEmployee.FirstName = String.Empty;
             }
 
             if (!record.IsNull("name"))
             {
-                currentEmployee.Name = record["name"].ToString();
+                anEmployee.Name = record["name"].ToString();
             }
             else
             {
-                currentEmployee.Name = String.Empty;
+                anEmployee.Name = String.Empty;
             }
             
             if (!record.IsNull("city"))
             {
-                currentEmployee.City = record["city"].ToString();
+                anEmployee.City = record["city"].ToString();
             }
             else
             {
-                currentEmployee.City = String.Empty;
+                anEmployee.City = String.Empty;
             }
 
             if (!record.IsNull("birth"))
             {
-                currentEmployee.Birth = Convert.ToDateTime(record["birth"].ToString());
+                anEmployee.Birth = Convert.ToDateTime(record["birth"].ToString());
             }
             else
             {
-                currentEmployee.Birth = null;
+                anEmployee.Birth = null;
             }
 
             if (!record.IsNull("email"))
             {
-                currentEmployee.Email = record["email"].ToString();
+                anEmployee.Email = record["email"].ToString();
             }
             else
             {
-                currentEmployee.Email = String.Empty;
+                anEmployee.Email = String.Empty;
             }
 
             if (!record.IsNull("date_of_joining"))
             {
-                currentEmployee.DateOfJoining = Convert.ToDateTime(record["date_of_joining"].ToString());
+                anEmployee.DateOfJoining = Convert.ToDateTime(record["date_of_joining"].ToString());
             }
             else
             {
-                currentEmployee.DateOfJoining = null;
+                anEmployee.DateOfJoining = null;
             }
 
             if (!record.IsNull("status"))
             {
-                currentEmployee.Status = (bool)record["status"];
+                anEmployee.Status = (bool)record["status"];
             }
             else
             {
-                currentEmployee.Status = null;
+                anEmployee.Status = null;
             }
 
             if (!record.IsNull("department"))
             {
-                currentEmployee.Department = record["department"].ToString();
+                anEmployee.Department = record["department"].ToString();
             }
             else
             {
-                currentEmployee.Department = String.Empty;
+                anEmployee.Department = String.Empty;
             }
 
-            return currentEmployee;
+            return anEmployee;
         }
 
     }

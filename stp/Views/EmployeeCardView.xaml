@@ -41,7 +41,9 @@
         </Ribbon>
         
         <StackPanel Orientation="Vertical" Grid.Row="1" Margin="4">
-            <Expander Header="Allgemein" Margin="0,0,0,4" BorderBrush="Black" Background="#FFDFE9F5" Padding="4">
+            
+            <Expander Header="Allgemein" IsExpanded="True">
+                
                 <Grid>
                     
                     <Grid.ColumnDefinitions>
@@ -58,48 +60,53 @@
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="0">
                         <Label Content="Vorname" MinWidth="150"/>
-                        <TextBox Text="{Binding Employee.FirstName}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.FirstName}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1">
                         <Label Content="Nachname" MinWidth="150"/>
-                        <TextBox Text="{Binding Employee.Name}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.Name}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="2">
                         <Label Content="Stadt" MinWidth="150"/>
-                        <TextBox Text="{Binding Employee.City}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.City}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="3">
                         <Label Content="Geburtsdatum" MinWidth="150"/>
-                        <TextBox Text="{Binding Employee.Birth}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.Birth}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="0">
                         <Label Content="Email" MinWidth="150"/>
-                        <TextBox Text="{Binding Employee.Email}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.Email}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1">
                         <Label Content="Eintrittsdatum" MinWidth="150" />
-                        <TextBox Text="{Binding Employee.DateOfJoining}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.DateOfJoining}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="2">
                         <Label Content="Abteilung" MinWidth="150"/>
-                        <TextBox Text="{Binding Employee.Department}" VerticalContentAlignment="Center" MinWidth="150"/>
+                        <TextBox Text="{Binding Employee.Department}" VerticalContentAlignment="Center" MinWidth="150" IsReadOnly="{Binding IsViewMode}" />
                     </StackPanel>
                     
                 </Grid>
+                
             </Expander>
-            <Expander Header="Schulungen" Margin="0,0,0,4" Background="#FFDFE9F5" BorderBrush="Black" Padding="4">
-                <DataGrid>
+
+            <Expander Header="Schulungen" IsExpanded="True">
+                
+                <DataGrid IsReadOnly="True">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Test" />
                     </DataGrid.Columns>
                 </DataGrid>
+                
             </Expander>
+            
         </StackPanel>
     </Grid>
 

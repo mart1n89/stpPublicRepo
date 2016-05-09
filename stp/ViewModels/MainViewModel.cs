@@ -12,35 +12,42 @@ namespace stp.ViewModels
         private bool isTabCourseSelected;
 
         private UserControl activeUserControl;
-        
-        private DebugView debugView;
-        private DebugViewModel debugViewModel;
 
-        private EmployeeListView employeeView;
-        private EmployeeListViewModel employeeListViewModel;
+        #region Views
+        private DebugView debugView;
+        private EmployeeListView employeeListView;
+        #endregion
+
+        #region ViewModel
+        private DebugViewModel debugViewModel;
         private EmployeeCardViewModel employeeCardViewModel;
+        private EmployeeListViewModel employeeListViewModel;        
+        #endregion
+
+
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel()
+        public MainViewModel() { OnInitialize(); }
+
+        private void OnInitialize()
         {
             debugView = new DebugView();
             debugViewModel = new DebugViewModel();
 
-            employeeView = new EmployeeListView();
+            employeeListView = new EmployeeListView();
             employeeListViewModel = new EmployeeListViewModel();
 
             employeeCardViewModel = new EmployeeCardViewModel(null);
 
-            ActiveUserControl = employeeView;
+            ActiveUserControl = employeeListView;
             ActiveUserControl.DataContext = employeeListViewModel;
 
-            CloseApplication = new CloseApplicationCommand();
-
-            EditEmployeeCommand = new EditEmployeeCommand(employeeListViewModel, employeeCardViewModel);
-            ShowEmployeeCommand = new ShowEmployeeCommand(employeeListViewModel, employeeCardViewModel);
-            ArchiveEmployeeCommand = new ArchiveEmployeeCommand(employeeListViewModel, employeeCardViewModel);
+            CloseApplication        = new CloseApplicationCommand();
+            EditEmployeeCommand     = new EditEmployeeCommand(employeeListViewModel, employeeCardViewModel);
+            ShowEmployeeCommand     = new ShowEmployeeCommand(employeeListViewModel, employeeCardViewModel);
+            ArchiveEmployeeCommand  = new ArchiveEmployeeCommand(employeeListViewModel, employeeCardViewModel);
         }
 
         /// <summary>
@@ -83,7 +90,7 @@ namespace stp.ViewModels
                 isTabEmployeeSelected = value;
                 OnPropertyChanged("IsTabEmployeeSelected");
 
-                ActiveUserControl = employeeView;
+                ActiveUserControl = employeeListView;
                 ActiveUserControl.DataContext = employeeListViewModel;
             }
         }

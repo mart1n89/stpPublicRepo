@@ -12,6 +12,7 @@ namespace stp.Data
         private static DataManager instance = null;
         private static readonly object padlock = new object();
         private ObservableCollection<Employee> employeeCollection;
+        private ObservableCollection<Training> trainingCollection;
 
         #region Sql DataTypes
         private SqlConnection goliath;
@@ -44,27 +45,101 @@ namespace stp.Data
         {
 
             SqlCommand sqlCommand = new SqlCommand(
-                @"select E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
-                    join TBL_DEPARTMENT D on D.ID = E.fk_dep; ",
+                @"SELECT E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
+                    JOIN TBL_DEPARTMENT D on D.ID = E.fk_dep
+                  WHERE E.status = 1",
                 goliath);
 
             return BuildEmployeeCollectionFromQuey(sqlCommand);
 
         }
+        public ObservableCollection<Employee> SelectArchivedFromEmployees()
+        {
 
+            SqlCommand sqlCommand = new SqlCommand(
+                @"SELECT E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
+                    JOIN TBL_DEPARTMENT D on D.ID = E.fk_dep",
+                goliath);
+
+            return BuildEmployeeCollectionFromQuey(sqlCommand);
+
+        }
         public ObservableCollection<Employee> SelectFromEmployees(string paramColumnName, string paramFilterValue)
         {
 
             SqlCommand sqlCommand = new SqlCommand(
-                @"select E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
-                    join TBL_DEPARTMENT D on D.ID = E.fk_dep
-                    AND " + paramColumnName + " like '%" + paramFilterValue + "%'",
+                @"SELECT E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
+                    JOIN TBL_DEPARTMENT D on D.ID = E.fk_dep
+                  WHERE E.status = 1  
+                  AND " + paramColumnName + " like '%" + paramFilterValue + "%'",
                 goliath);
 
             return BuildEmployeeCollectionFromQuey(sqlCommand);
 
         }
 
+        public void ArchiveFromEmployee(int paramId)
+        {
+            SqlCommand sqlCommand = new SqlCommand(@"UPDATE TBL_EMPLOYEE 
+                                                     SET status = 0
+                                                     WHERE ID=" + paramId, goliath);
+
+            try
+            {
+                goliath.Open();
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Debug.Assert(false, e.Message);
+            }
+            finally
+            {
+                goliath.Close();
+            }
+        }
+
+        public ObservableCollection<Training> BuildTrainingCollectionFromQuey(SqlCommand paramSqlCommand)
+        {
+            if (dt == null)
+                dt = new DataTable();
+
+            if (trainingCollection == null)
+                trainingCollection = new ObservableCollection<Training>();
+
+            trainingCollection.Clear();
+
+            SqlDataReader sqlDataReader = null;
+            SqlCommand sqlCommand = paramSqlCommand;
+
+            try
+            {
+                goliath.Open();
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dt.Load(sqlDataReader);
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    trainingCollection.Add((Training)dr);
+                }
+            }
+
+            catch (Exception e)
+            {
+                Debug.Assert(false, e.Message);
+            }
+
+            finally
+            {
+                if (sqlDataReader != null)
+                    sqlDataReader.Close();
+
+                dt.Clear();
+                goliath.Close();
+            }
+
+            return trainingCollection;
+        }
         public ObservableCollection<Employee> BuildEmployeeCollectionFromQuey(SqlCommand paramSqlCommand)
         {
             if (dt == null)

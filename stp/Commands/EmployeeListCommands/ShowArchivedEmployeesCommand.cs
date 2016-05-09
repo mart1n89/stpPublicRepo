@@ -1,14 +1,16 @@
-﻿using stp.ViewModels;
+﻿using stp.Data;
+using stp.ViewModels;
 using System;
 using System.Windows.Input;
 
 namespace stp.Commands.EmployeeListCommands
 {
-    internal class UpdateFilterValueCommand : ICommand
+    internal class ShowArchivedEmployeesCommand : ICommand
     {
+        private bool isChecked;
         private EmployeeListViewModel employeeListViewModel;
 
-        public UpdateFilterValueCommand(EmployeeListViewModel vm)
+        public ShowArchivedEmployeesCommand(EmployeeListViewModel vm)
         {
             this.employeeListViewModel = vm;
         }
@@ -21,12 +23,12 @@ namespace stp.Commands.EmployeeListCommands
 
         public bool CanExecute(object parameter)
         {
-            return (String.IsNullOrWhiteSpace(employeeListViewModel.FilterValue)) ? true : false;
+            return true;
         }
 
         public void Execute(object parameter)
         {
-            employeeListViewModel.FilterValue = "*";
+            employeeListViewModel.ItemSource = DataManager.Instance.SelectArchivedFromEmployees();
         }
     }
 }

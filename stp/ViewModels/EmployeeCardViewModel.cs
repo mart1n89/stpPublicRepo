@@ -1,23 +1,35 @@
-﻿using stp.Models;
+﻿using stp.Common;
+using stp.Models;
 using stp.ViewModels.Master;
 
 namespace stp.ViewModels
 {
     internal class EmployeeCardViewModel : ViewModelBase
     {
-        Employee emp;
+        private bool isViewMode;
+        private Employee employee;
         public EmployeeCardViewModel(Employee emp)
         {
-            this.emp = emp;
+            employee = emp;
         }
 
         public Employee Employee
         {
-            get { return emp; }
+            get { return employee; }
             set
             {
-                emp = value;
+                employee = value;
                 OnPropertyChanged("Employee");
+            }
+        }
+
+        public bool IsViewMode
+        {
+            get { return isViewMode; }
+            set
+            {
+                isViewMode = value;
+                OnPropertyChanged("IsViewMode");
             }
         }
     }
