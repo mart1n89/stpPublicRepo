@@ -1,6 +1,7 @@
 ﻿using stp.Models.Master;
 using System;
 using System.Data;
+using stp.Data;
 
 namespace stp.Models
 {
@@ -202,5 +203,22 @@ namespace stp.Models
             return anEmployee;
         }
 
+        public static explicit operator Employee(TBL_EMPLOYEE v)
+        {
+            Employee newEmp = new Employee()
+            {
+                Birth = v.birth,
+                City = v.city,
+                DateOfJoining = v.date_of_joining,
+                Department = v.TBL_DEPARTMENT.name,
+                Email = v.email,
+                FirstName = v.firstName,
+                Id = v.ID,
+                Name = v.name,
+                Status = v.status
+            };
+
+            return newEmp;
+        }
     }
 }

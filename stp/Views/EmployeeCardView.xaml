@@ -97,6 +97,7 @@
                 
             </Expander>
 
+            <!-- 3 Blöcke , Absolvierte, Bevorstehende, versäumte Schulungen -->
             <Expander Header="Schulungen" IsExpanded="True">
                 
                 <DataGrid IsReadOnly="True">

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Linq;
 
 namespace stp.Data
 {
@@ -13,6 +14,8 @@ namespace stp.Data
         private static readonly object padlock = new object();
         private ObservableCollection<Employee> employeeCollection;
         private ObservableCollection<Training> trainingCollection;
+
+        StpDataContext test;
 
         #region Sql DataTypes
         private SqlConnection goliath;
@@ -36,7 +39,9 @@ namespace stp.Data
             conBuilder.InitialCatalog = database;
 
             goliath = new SqlConnection(conBuilder.ConnectionString);
-            
+
+            test = new StpDataContext();
+
         }
 
         #region SelectFromEmployees
@@ -155,14 +160,22 @@ namespace stp.Data
 
             try
             {
-                goliath.Open();
-                sqlDataReader = sqlCommand.ExecuteReader();
-                dt.Load(sqlDataReader);                    
+                //goliath.Open();
+                //sqlDataReader = sqlCommand.ExecuteReader();
+                //dt.Load(sqlDataReader);
 
-                foreach (DataRow dr in dt.Rows)
+                //foreach (DataRow dr in dt.Rows)
+                //{
+                //    employeeCollection.Add((Employee)dr);
+                //}
+
+                var dataRows = from employees in test.TBL_EMPLOYEEs
+                               select employees;
+
+                foreach (var item in dataRows)
                 {
-                    employeeCollection.Add((Employee)dr);
-                }                  
+                    employeeCollection.Add((Employee)item);
+                }
             }
 
             catch (Exception e)

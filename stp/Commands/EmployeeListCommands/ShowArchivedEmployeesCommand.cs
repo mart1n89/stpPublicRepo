@@ -7,7 +7,6 @@ namespace stp.Commands.EmployeeListCommands
 {
     internal class ShowArchivedEmployeesCommand : ICommand
     {
-        private bool isChecked;
         private EmployeeListViewModel employeeListViewModel;
 
         public ShowArchivedEmployeesCommand(EmployeeListViewModel vm)
