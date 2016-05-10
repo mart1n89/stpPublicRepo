@@ -22,7 +22,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <CheckBox Content="Archivierte Mitarbeiter" VerticalAlignment="Center" Command="{Binding ShowArchivedEmployees}"/>
+                <CheckBox Content="Archivierte Mitarbeiter" VerticalAlignment="Center" Command="{Binding ShowArchivedEmployees}" IsChecked="{Binding IsChecked}"/>
 
                 <TextBlock Text="Filtereingabe:" VerticalAlignment="Center" Grid.Column="1" Margin="4,0" HorizontalAlignment="Right"/>
                 

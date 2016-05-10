@@ -12,6 +12,7 @@ namespace stp.ViewModels
     internal class EmployeeListViewModel : ViewModelBase
     {
         private string filterValue;
+        private bool isChecked;
         private CustomComboBoxItem selectedComboBoxItem;
 
         private Employee selectedItem;
@@ -71,7 +72,18 @@ namespace stp.ViewModels
                 filterValue = value;
                 OnPropertyChanged("FilterValue");
             }
-        }   
+        }
+
+        public Boolean IsChecked
+        {
+            get { return isChecked; }
+            set
+            {
+                isChecked = value;
+                OnPropertyChanged("IsChecked");
+            }
+        }
+
 
         public ICommand SearchEmployees
         {

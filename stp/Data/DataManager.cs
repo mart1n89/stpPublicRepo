@@ -15,8 +15,6 @@ namespace stp.Data
         private ObservableCollection<Employee> employeeCollection;
         private ObservableCollection<Training> trainingCollection;
 
-        StpDataContext test;
-
         #region Sql DataTypes
         private SqlConnection goliath;
         private SqlConnectionStringBuilder conBuilder;
@@ -39,8 +37,6 @@ namespace stp.Data
             conBuilder.InitialCatalog = database;
 
             goliath = new SqlConnection(conBuilder.ConnectionString);
-
-            test = new StpDataContext();
 
         }
 
@@ -69,14 +65,25 @@ namespace stp.Data
             return BuildEmployeeCollectionFromQuey(sqlCommand);
 
         }
+        public ObservableCollection<Employee> SelectArchivedFromEmployees(string paramColumnName, string paramFilterValue)
+        {
+
+            SqlCommand sqlCommand = new SqlCommand(
+                @"SELECT E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
+                    JOIN TBL_DEPARTMENT D on D.ID = E.fk_dep
+                  WHERE " + paramColumnName + " like '%" + paramFilterValue + "%'",
+                goliath);
+
+            return BuildEmployeeCollectionFromQuey(sqlCommand);
+
+        }
         public ObservableCollection<Employee> SelectFromEmployees(string paramColumnName, string paramFilterValue)
         {
 
             SqlCommand sqlCommand = new SqlCommand(
                 @"SELECT E.ID, E.firstName, E.name, E.city, E.birth, E.email, E.date_of_joining, E.status, D.name as department from TBL_EMPLOYEE E
                     JOIN TBL_DEPARTMENT D on D.ID = E.fk_dep
-                  WHERE E.status = 1  
-                  AND " + paramColumnName + " like '%" + paramFilterValue + "%'",
+                  WHERE " + paramColumnName + " like '%" + paramFilterValue + "%'",
                 goliath);
 
             return BuildEmployeeCollectionFromQuey(sqlCommand);
@@ -160,21 +167,13 @@ namespace stp.Data
 
             try
             {
-                //goliath.Open();
-                //sqlDataReader = sqlCommand.ExecuteReader();
-                //dt.Load(sqlDataReader);
+                goliath.Open();
+                sqlDataReader = sqlCommand.ExecuteReader();
+                dt.Load(sqlDataReader);
 
-                //foreach (DataRow dr in dt.Rows)
-                //{
-                //    employeeCollection.Add((Employee)dr);
-                //}
-
-                var dataRows = from employees in test.TBL_EMPLOYEEs
-                               select employees;
-
-                foreach (var item in dataRows)
+                foreach (DataRow dr in dt.Rows)
                 {
-                    employeeCollection.Add((Employee)item);
+                    employeeCollection.Add((Employee)dr);
                 }
             }
 

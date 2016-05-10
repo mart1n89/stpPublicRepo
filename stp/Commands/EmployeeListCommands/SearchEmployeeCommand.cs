@@ -33,15 +33,22 @@ namespace stp.Commands.EmployeeListCommands
         {
             if (employeeListViewModel.FilterValue == "*")
             {
-                employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees();
+                if (employeeListViewModel.IsChecked)
+                    employeeListViewModel.ItemSource = DataManager.Instance.SelectArchivedFromEmployees();
+                else
+                    employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees();
 
                 if (employeeListViewModel.ItemSource.Count == 0)
                     MessageBox.Show("Kein Treffer!");
             }
             else
             {
-                employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees(
-                    employeeListViewModel.SelectedComboBoxItem.Value, employeeListViewModel.FilterValue);
+                if (employeeListViewModel.IsChecked)
+                    employeeListViewModel.ItemSource = DataManager.Instance.SelectArchivedFromEmployees(
+                        employeeListViewModel.SelectedComboBoxItem.Value, employeeListViewModel.FilterValue);
+                else
+                    employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees(
+                        employeeListViewModel.SelectedComboBoxItem.Value, employeeListViewModel.FilterValue);
 
                 if (employeeListViewModel.ItemSource.Count == 0)
                     MessageBox.Show("Kein Treffer!");

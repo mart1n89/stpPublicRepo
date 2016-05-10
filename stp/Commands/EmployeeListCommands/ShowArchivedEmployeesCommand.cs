@@ -27,7 +27,10 @@ namespace stp.Commands.EmployeeListCommands
 
         public void Execute(object parameter)
         {
-            employeeListViewModel.ItemSource = DataManager.Instance.SelectArchivedFromEmployees();
+            if (employeeListViewModel.IsChecked)
+                employeeListViewModel.ItemSource = DataManager.Instance.SelectArchivedFromEmployees();
+            else
+                employeeListViewModel.ItemSource = DataManager.Instance.SelectFromEmployees();                      
         }
     }
 }
